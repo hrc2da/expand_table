@@ -57,7 +57,7 @@ int main() {
         if (siz != vidsendsiz) {
             std::cout << "size != vidsendsiz " << siz << " / " << vidsendsiz << std::endl;
         }
-        size_t written = write(v4l2lo, combine.data, siz);
+        written = write(v4l2lo, combine.data, siz);
         if (written < 0) {
             std::cout << "Error writing v4l2l device";
             close(v4l2lo);
