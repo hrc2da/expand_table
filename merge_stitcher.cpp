@@ -80,25 +80,23 @@ int main()
             return -1;
         }
         siz = combine.total() * combine.elemSize();
-        if (siz != vidsendsiz) {
-            std::cout << "size != vidsendsiz " << siz << " / " << vidsendsiz << std::endl;
-        }
+ //       if (siz != vidsendsiz) {
+ //           std::cout << "size != vidsendsiz " << siz << " / " << vidsendsiz << std::endl;
+ //       }
         written = write(v4l2lo, combine.data, siz);
         if (written < 0) {
             std::cout << "Error writing v4l2l device";
             close(v4l2lo);
             return 1;
         }
+
         switch (cv::waitKey(10)) {
             case 40:
                 return 0;
         }
 
+        imgs.erase(imgs.begin(),imgs.end());
 
-
-        //wait for 40 milliseconds
-
-        //exit the loop if user press "Esc" key  (ASCII value of "Esc" is 27)
     }
 
     return 0;

@@ -11,6 +11,8 @@ int main() {
 
     cv::VideoCapture cap1(0);
     if( !cap1.isOpened() ) return 1;
+    cv::VideoCapture cap2(1);
+    if( !cap2.isOpened() ) return 1;
 
     int width=640;
     int height=480;
@@ -25,7 +27,10 @@ int main() {
     cap1.set(CV_CAP_PROP_FRAME_WIDTH,width);
     cap1.set(CV_CAP_PROP_FRAME_HEIGHT,height);
 
-    int v4l2lo = open("/dev/video4", O_WRONLY);
+    cap2.set(CV_CAP_PROP_FRAME_WIDTH,width);
+    cap2.set(CV_CAP_PROP_FRAME_HEIGHT,height);
+
+    int v4l2lo = open("/dev/video2", O_WRONLY);
     if(v4l2lo < 0) {
         std::cout << "Error opening v4l2l device: " << strerror(errno);
         exit(-2);
@@ -49,9 +54,8 @@ int main() {
      while (1) {
 
         cap1>>frame1;
-        frame2=frame1;
-
-        hconcat(frame1,frame2,combine);
+        cap2>>frame2;
+         hconcat(frame1,frame2,combine);
 
         siz = combine.total() * combine.elemSize();
         if (siz != vidsendsiz) {
